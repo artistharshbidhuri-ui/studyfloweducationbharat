@@ -3,7 +3,16 @@ import { Link } from "@tanstack/react-router";
 import { useProfile, useTasks, useLogs, computeStreak, todayKey, logProgress } from "@/lib/store";
 import { AppShell } from "@/components/AppShell";
 import { Onboarding } from "@/components/Onboarding";
-import { Flame, Clock, BookOpen, Target, ArrowRight, Sparkles, Check, Calendar } from "lucide-react";
+import {
+  Flame,
+  Clock,
+  BookOpen,
+  Target,
+  ArrowRight,
+  Sparkles,
+  Check,
+  Calendar,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,9 +20,17 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "StudyFlow AI — Smart Study Companion for Indian Students" },
-      { name: "description", content: "AI-powered study planner, doubt solver and career guide for CBSE, ICSE & State Board students from Class 6 to 12." },
+      {
+        name: "description",
+        content:
+          "AI-powered study planner, doubt solver and career guide for CBSE, ICSE & State Board students from Class 6 to 12.",
+      },
       { property: "og:title", content: "StudyFlow AI — Smart Study Companion" },
-      { property: "og:description", content: "Plan studies, solve doubts in Hinglish, track streaks, and get career guidance — all in one app." },
+      {
+        property: "og:description",
+        content:
+          "Plan studies, solve doubts in Hinglish, track streaks, and get career guidance — all in one app.",
+      },
     ],
   }),
   component: HomePage,
@@ -65,13 +82,19 @@ function Dashboard() {
           <div>
             <div className="flex items-center gap-2">
               <Flame className="h-5 w-5 text-warning-foreground" />
-              <span className="text-xs font-bold uppercase tracking-wider text-warning-foreground/80">Streak</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-warning-foreground/80">
+                Streak
+              </span>
             </div>
             <div className="mt-1 text-5xl font-bold text-warning-foreground">{streak}</div>
-            <div className="text-sm text-warning-foreground/80">{streak === 1 ? "day" : "days"} in a row</div>
+            <div className="text-sm text-warning-foreground/80">
+              {streak === 1 ? "day" : "days"} in a row
+            </div>
           </div>
           <div className="text-right">
-            <div className="text-xs uppercase tracking-wider text-warning-foreground/80 font-bold">Today</div>
+            <div className="text-xs uppercase tracking-wider text-warning-foreground/80 font-bold">
+              Today
+            </div>
             <div className="text-3xl font-bold text-warning-foreground mt-1">{minutesToday}m</div>
             <div className="text-xs text-warning-foreground/80">studied</div>
           </div>
@@ -80,8 +103,18 @@ function Dashboard() {
 
       {/* Stat cards */}
       <div className="grid grid-cols-2 gap-3 mt-3">
-        <StatCard icon={<Target className="h-4 w-4" />} label="Today" value={`${completedToday}/${totalToday || 0}`} sub="tasks done" />
-        <StatCard icon={<Clock className="h-4 w-4" />} label="This week" value={`${Math.round(weekTotal / 60)}h`} sub={`${weekTotal} min`} />
+        <StatCard
+          icon={<Target className="h-4 w-4" />}
+          label="Today"
+          value={`${completedToday}/${totalToday || 0}`}
+          sub="tasks done"
+        />
+        <StatCard
+          icon={<Clock className="h-4 w-4" />}
+          label="This week"
+          value={`${Math.round(weekTotal / 60)}h`}
+          sub={`${weekTotal} min`}
+        />
       </div>
 
       {/* Week chart */}
@@ -106,7 +139,12 @@ function Dashboard() {
                   )}
                   style={{ height: `${h}px` }}
                 />
-                <span className={cn("text-[10px]", isToday ? "text-primary font-bold" : "text-muted-foreground")}>
+                <span
+                  className={cn(
+                    "text-[10px]",
+                    isToday ? "text-primary font-bold" : "text-muted-foreground",
+                  )}
+                >
                   {dayLabel(i)}
                 </span>
               </div>
@@ -133,7 +171,9 @@ function Dashboard() {
         >
           <Sparkles className="h-8 w-8 text-primary mx-auto mb-2" />
           <div className="font-semibold">Generate your first plan</div>
-          <div className="text-xs text-muted-foreground mt-1">AI will create a chapter-wise schedule for you</div>
+          <div className="text-xs text-muted-foreground mt-1">
+            AI will create a chapter-wise schedule for you
+          </div>
         </Link>
       ) : (
         <div className="mt-3 space-y-2">
@@ -154,16 +194,25 @@ function Dashboard() {
                   t.done ? "bg-success border-success" : "border-muted-foreground",
                 )}
               >
-                {t.done && <Check className="h-3.5 w-3.5 text-success-foreground" strokeWidth={3} />}
+                {t.done && (
+                  <Check className="h-3.5 w-3.5 text-success-foreground" strokeWidth={3} />
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-primary uppercase tracking-wide">{t.subject}</span>
+                  <span className="text-xs font-bold text-primary uppercase tracking-wide">
+                    {t.subject}
+                  </span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded bg-secondary text-muted-foreground capitalize">
                     {t.type}
                   </span>
                 </div>
-                <div className={cn("text-sm font-medium mt-0.5 truncate", t.done && "line-through opacity-60")}>
+                <div
+                  className={cn(
+                    "text-sm font-medium mt-0.5 truncate",
+                    t.done && "line-through opacity-60",
+                  )}
+                >
                   {t.chapter}
                 </div>
               </div>
@@ -203,7 +252,9 @@ function Dashboard() {
       {/* Profile pill */}
       <div className="mt-6 mb-2 rounded-2xl border border-border bg-secondary/30 p-4 flex items-center justify-between">
         <div>
-          <div className="text-xs uppercase tracking-wider text-muted-foreground font-bold">Your profile</div>
+          <div className="text-xs uppercase tracking-wider text-muted-foreground font-bold">
+            Your profile
+          </div>
           <div className="text-sm font-medium mt-1">
             Class {profile.studentClass} • {profile.board}
             {profile.stream ? ` • ${profile.stream.replace("Science-", "")}` : ""}
@@ -227,7 +278,17 @@ function Dashboard() {
   );
 }
 
-function StatCard({ icon, label, value, sub }: { icon: React.ReactNode; label: string; value: string; sub: string }) {
+function StatCard({
+  icon,
+  label,
+  value,
+  sub,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+  sub: string;
+}) {
   return (
     <div className="rounded-2xl border border-border gradient-card p-4">
       <div className="flex items-center gap-1.5 text-muted-foreground">

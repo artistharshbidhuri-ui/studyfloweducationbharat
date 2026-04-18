@@ -14,9 +14,16 @@ export const Route = createFileRoute("/career")({
   head: () => ({
     meta: [
       { title: "Career Guidance — StudyFlow AI" },
-      { name: "description", content: "Discover the best Indian career paths based on your interests and strengths. Includes JEE, NEET, CUET, CLAT exam guidance and roadmaps." },
+      {
+        name: "description",
+        content:
+          "Discover the best Indian career paths based on your interests and strengths. Includes JEE, NEET, CUET, CLAT exam guidance and roadmaps.",
+      },
       { property: "og:title", content: "Career Guidance for Indian Students" },
-      { property: "og:description", content: "AI-powered career suggestions with exams, colleges, and step-by-step roadmaps." },
+      {
+        property: "og:description",
+        content: "AI-powered career suggestions with exams, colleges, and step-by-step roadmaps.",
+      },
     ],
   }),
   component: CareerPage,
@@ -130,7 +137,8 @@ function Career() {
         <div className="mt-2 space-y-4">
           <div className="rounded-2xl bg-accent/15 border border-accent/30 p-4">
             <p className="text-sm">
-              <span className="font-bold text-accent">{result.careers.length} career paths</span> picked for you based on your profile
+              <span className="font-bold text-accent">{result.careers.length} career paths</span>{" "}
+              picked for you based on your profile
             </p>
           </div>
 

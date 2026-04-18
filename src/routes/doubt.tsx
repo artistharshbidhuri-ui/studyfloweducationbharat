@@ -16,9 +16,16 @@ export const Route = createFileRoute("/doubt")({
   head: () => ({
     meta: [
       { title: "AI Doubt Solver — StudyFlow AI" },
-      { name: "description", content: "Ask any study question and get NCERT-based explanations in Hinglish or English with step-by-step solutions and board exam answers." },
+      {
+        name: "description",
+        content:
+          "Ask any study question and get NCERT-based explanations in Hinglish or English with step-by-step solutions and board exam answers.",
+      },
       { property: "og:title", content: "AI Doubt Solver — StudyFlow AI" },
-      { property: "og:description", content: "Get instant homework help with board exam answer format." },
+      {
+        property: "og:description",
+        content: "Get instant homework help with board exam answer format.",
+      },
     ],
   }),
   component: DoubtPage,
@@ -190,7 +197,9 @@ function DoubtSolver() {
                   send(input);
                 }
               }}
-              placeholder={profile.language === "hinglish" ? "Apna doubt likhiye..." : "Type your doubt..."}
+              placeholder={
+                profile.language === "hinglish" ? "Apna doubt likhiye..." : "Type your doubt..."
+              }
               maxLength={2000}
               rows={1}
               className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0 px-2 min-h-[40px] max-h-32"

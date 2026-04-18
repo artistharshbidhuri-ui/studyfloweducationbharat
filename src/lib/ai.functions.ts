@@ -4,7 +4,10 @@ import { z } from "zod";
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const DEFAULT_MODEL = "google/gemini-3-flash-preview";
 
-async function callAI(messages: { role: string; content: string }[], opts?: { tools?: unknown[]; tool_choice?: unknown }) {
+async function callAI(
+  messages: { role: string; content: string }[],
+  opts?: { tools?: unknown[]; tool_choice?: unknown },
+) {
   const apiKey = process.env.LOVABLE_API_KEY;
   if (!apiKey) {
     throw new Error("AI service is not configured. Please contact support.");
@@ -158,7 +161,15 @@ Pick the most important NCERT chapters. Mix study + revision + practice. Keep ta
       throw new Error("AI did not return a valid plan. Please try again.");
     }
     const parsed = JSON.parse(toolCall.function.arguments) as {
-      days: { day: string; tasks: { subject: string; chapter: string; duration: number; type: "study" | "revision" | "practice" }[] }[];
+      days: {
+        day: string;
+        tasks: {
+          subject: string;
+          chapter: string;
+          duration: number;
+          type: "study" | "revision" | "practice";
+        }[];
+      }[];
       tip: string;
     };
     return parsed;
@@ -217,8 +228,16 @@ Suggest 3 best-fit Indian career paths.`;
                         title: { type: "string" },
                         whyFit: { type: "string", description: "1-2 sentences" },
                         requiredExams: { type: "array", items: { type: "string" } },
-                        roadmap: { type: "array", items: { type: "string" }, description: "5-6 step roadmap" },
-                        topColleges: { type: "array", items: { type: "string" }, description: "2-4 Indian colleges" },
+                        roadmap: {
+                          type: "array",
+                          items: { type: "string" },
+                          description: "5-6 step roadmap",
+                        },
+                        topColleges: {
+                          type: "array",
+                          items: { type: "string" },
+                          description: "2-4 Indian colleges",
+                        },
                       },
                       required: ["title", "whyFit", "requiredExams", "roadmap", "topColleges"],
                       additionalProperties: false,

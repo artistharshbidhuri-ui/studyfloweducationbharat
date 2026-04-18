@@ -42,7 +42,9 @@ export function Onboarding() {
           <h1 className="text-3xl font-bold">
             Welcome to <span className="text-gradient">StudyFlow AI</span>
           </h1>
-          <p className="text-muted-foreground mt-2 text-sm">Your AI study buddy for board exams 🇮🇳</p>
+          <p className="text-muted-foreground mt-2 text-sm">
+            Your AI study buddy for board exams 🇮🇳
+          </p>
         </div>
 
         <div className="rounded-3xl border border-border gradient-card p-6 shadow-xl">
@@ -77,7 +79,10 @@ export function Onboarding() {
                   ))}
                 </div>
               </div>
-              <Button onClick={() => setStep(1)} className="w-full h-12 rounded-xl gradient-primary glow-primary text-primary-foreground font-semibold">
+              <Button
+                onClick={() => setStep(1)}
+                className="w-full h-12 rounded-xl gradient-primary glow-primary text-primary-foreground font-semibold"
+              >
                 Next
               </Button>
             </div>
@@ -93,7 +98,9 @@ export function Onboarding() {
                       key={c}
                       onClick={() => setStudentClass(c)}
                       className={`h-11 rounded-xl border text-sm font-semibold transition-all ${
-                        studentClass === c ? "border-primary bg-primary/15 text-foreground" : "border-border text-muted-foreground"
+                        studentClass === c
+                          ? "border-primary bg-primary/15 text-foreground"
+                          : "border-border text-muted-foreground"
                       }`}
                     >
                       {c}
@@ -109,7 +116,9 @@ export function Onboarding() {
                       key={b.value}
                       onClick={() => setBoard(b.value)}
                       className={`h-11 rounded-xl border text-sm font-medium transition-all ${
-                        board === b.value ? "border-primary bg-primary/15 text-foreground" : "border-border text-muted-foreground"
+                        board === b.value
+                          ? "border-primary bg-primary/15 text-foreground"
+                          : "border-border text-muted-foreground"
                       }`}
                     >
                       {b.label}
@@ -126,7 +135,9 @@ export function Onboarding() {
                         key={s.value}
                         onClick={() => setStream(s.value)}
                         className={`h-11 rounded-xl border text-xs font-medium transition-all ${
-                          stream === s.value ? "border-primary bg-primary/15 text-foreground" : "border-border text-muted-foreground"
+                          stream === s.value
+                            ? "border-primary bg-primary/15 text-foreground"
+                            : "border-border text-muted-foreground"
                         }`}
                       >
                         {s.label}
@@ -136,10 +147,17 @@ export function Onboarding() {
                 </div>
               )}
               <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setStep(0)} className="flex-1 h-12 rounded-xl">
+                <Button
+                  variant="outline"
+                  onClick={() => setStep(0)}
+                  className="flex-1 h-12 rounded-xl"
+                >
                   Back
                 </Button>
-                <Button onClick={() => setStep(2)} className="flex-1 h-12 rounded-xl gradient-primary text-primary-foreground font-semibold">
+                <Button
+                  onClick={() => setStep(2)}
+                  className="flex-1 h-12 rounded-xl gradient-primary text-primary-foreground font-semibold"
+                >
                   Next
                 </Button>
               </div>
@@ -156,7 +174,9 @@ export function Onboarding() {
                       key={h}
                       onClick={() => setDailyHours(h)}
                       className={`h-11 rounded-xl border text-sm font-semibold transition-all ${
-                        dailyHours === h ? "border-primary bg-primary/15 text-foreground" : "border-border text-muted-foreground"
+                        dailyHours === h
+                          ? "border-primary bg-primary/15 text-foreground"
+                          : "border-border text-muted-foreground"
                       }`}
                     >
                       {h}h
@@ -171,17 +191,27 @@ export function Onboarding() {
                 </div>
                 <div className="flex flex-wrap gap-1.5 mt-2">
                   {getSubjectsFor({ studentClass, stream }).map((s) => (
-                    <span key={s} className="text-xs px-2.5 py-1 rounded-lg bg-primary/15 text-foreground">
+                    <span
+                      key={s}
+                      className="text-xs px-2.5 py-1 rounded-lg bg-primary/15 text-foreground"
+                    >
                       {s}
                     </span>
                   ))}
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="outline" onClick={() => setStep(1)} className="flex-1 h-12 rounded-xl">
+                <Button
+                  variant="outline"
+                  onClick={() => setStep(1)}
+                  className="flex-1 h-12 rounded-xl"
+                >
                   Back
                 </Button>
-                <Button onClick={finish} className="flex-1 h-12 rounded-xl gradient-primary glow-primary text-primary-foreground font-semibold">
+                <Button
+                  onClick={finish}
+                  className="flex-1 h-12 rounded-xl gradient-primary glow-primary text-primary-foreground font-semibold"
+                >
                   Start Learning
                 </Button>
               </div>

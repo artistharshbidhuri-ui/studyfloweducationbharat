@@ -15,9 +15,16 @@ export const Route = createFileRoute("/planner")({
   head: () => ({
     meta: [
       { title: "AI Study Planner — StudyFlow AI" },
-      { name: "description", content: "Get a personalized chapter-wise study plan based on your NCERT syllabus, board exam date, and daily schedule." },
+      {
+        name: "description",
+        content:
+          "Get a personalized chapter-wise study plan based on your NCERT syllabus, board exam date, and daily schedule.",
+      },
       { property: "og:title", content: "AI Study Planner — StudyFlow AI" },
-      { property: "og:description", content: "Personalized NCERT-based study schedule for Indian students." },
+      {
+        property: "og:description",
+        content: "Personalized NCERT-based study schedule for Indian students.",
+      },
     ],
   }),
   component: PlannerPage,
@@ -111,7 +118,10 @@ function Planner() {
             </Label>
             <div className="flex flex-wrap gap-1.5 mt-2">
               {profile.subjects.map((s) => (
-                <span key={s} className="text-xs px-2.5 py-1 rounded-lg bg-primary/15 text-foreground">
+                <span
+                  key={s}
+                  className="text-xs px-2.5 py-1 rounded-lg bg-primary/15 text-foreground"
+                >
                   {s}
                 </span>
               ))}
@@ -175,13 +185,18 @@ function Planner() {
       {plan && (
         <div className="mt-5">
           <div className="rounded-2xl bg-accent/15 border border-accent/30 p-4 mb-3">
-            <div className="text-xs font-bold uppercase tracking-wider text-accent mb-1">💡 Tip</div>
+            <div className="text-xs font-bold uppercase tracking-wider text-accent mb-1">
+              💡 Tip
+            </div>
             <p className="text-sm">{plan.tip}</p>
           </div>
 
           <div className="space-y-3">
             {plan.days.map((day, i) => (
-              <div key={i} className="rounded-2xl border border-border gradient-card overflow-hidden">
+              <div
+                key={i}
+                className="rounded-2xl border border-border gradient-card overflow-hidden"
+              >
                 <div className="px-4 py-3 border-b border-border flex items-center justify-between bg-secondary/30">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-primary" />
