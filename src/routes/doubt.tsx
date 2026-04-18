@@ -9,6 +9,7 @@ import { Send, Loader2, MessageCircle, Sparkles, Trash2, Languages } from "lucid
 import { solveDoubt } from "@/lib/ai.functions";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { BottomNav } from "@/components/BottomNav";
 import type { ChatMessage } from "@/lib/education";
 
 export const Route = createFileRoute("/doubt")({
