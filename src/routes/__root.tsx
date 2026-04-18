@@ -29,14 +29,14 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "StudyFlow AI" },
+      { name: "description", content: "AI study companion for Indian students — planner, doubt solver, career guide" },
+      { name: "author", content: "StudyFlow AI" },
+      { name: "theme-color", content: "#1e293b" },
+      { property: "og:title", content: "StudyFlow AI" },
+      { property: "og:description", content: "AI study companion for Indian students" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
