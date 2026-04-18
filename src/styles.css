@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap");
 
 @custom-variant dark (&:is(.dark *));
 
@@ -59,9 +60,58 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-streak: var(--streak);
 }
 
 :root {
+  --radius: 0.875rem;
+  /* Midnight Study — dark-mode-first; we apply dark by default */
+  --background: oklch(0.18 0.03 257);
+  --foreground: oklch(0.97 0.01 240);
+  --card: oklch(0.22 0.035 258);
+  --card-foreground: oklch(0.97 0.01 240);
+  --popover: oklch(0.22 0.035 258);
+  --popover-foreground: oklch(0.97 0.01 240);
+  --primary: oklch(0.66 0.18 255);
+  --primary-foreground: oklch(0.14 0.03 258);
+  --secondary: oklch(0.28 0.04 258);
+  --secondary-foreground: oklch(0.97 0.01 240);
+  --muted: oklch(0.26 0.035 258);
+  --muted-foreground: oklch(0.72 0.03 250);
+  --accent: oklch(0.88 0.08 220);
+  --accent-foreground: oklch(0.18 0.03 257);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 240);
+  --border: oklch(0.32 0.035 258);
+  --input: oklch(0.28 0.035 258);
+  --ring: oklch(0.66 0.18 255);
+  --success: oklch(0.72 0.16 158);
+  --success-foreground: oklch(0.14 0.03 258);
+  --warning: oklch(0.78 0.16 75);
+  --warning-foreground: oklch(0.18 0.03 257);
+  --streak: oklch(0.72 0.18 45);
+  --chart-1: oklch(0.66 0.18 255);
+  --chart-2: oklch(0.78 0.14 200);
+  --chart-3: oklch(0.72 0.16 158);
+  --chart-4: oklch(0.78 0.16 75);
+  --chart-5: oklch(0.72 0.18 45);
+  --sidebar: oklch(0.22 0.035 258);
+  --sidebar-foreground: oklch(0.97 0.01 240);
+  --sidebar-primary: oklch(0.66 0.18 255);
+  --sidebar-primary-foreground: oklch(0.14 0.03 258);
+  --sidebar-accent: oklch(0.28 0.04 258);
+  --sidebar-accent-foreground: oklch(0.97 0.01 240);
+  --sidebar-border: oklch(0.32 0.035 258);
+  --sidebar-ring: oklch(0.66 0.18 255);
+}
+
+:root.__placeholder_unused__ {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
