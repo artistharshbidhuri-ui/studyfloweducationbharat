@@ -205,18 +205,9 @@ function DoubtSolver() {
           </div>
         </div>
       </div>
-      {/* @ts-expect-error Server Component */}
-      <BottomNavWrapper />
+      <BottomNav />
     </div>
   );
-}
-
-function BottomNavWrapper() {
-  // BottomNav fixed at bottom; render it
-  // This wrapper exists so we can keep the chat layout custom
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { BottomNav } = require("@/components/BottomNav");
-  return <BottomNav />;
 }
 
 function MessageBubble({ message }: { message: ChatMessage }) {
