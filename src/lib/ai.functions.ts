@@ -4,9 +4,19 @@ import { z } from "zod";
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
 const DEFAULT_MODEL = "google/gemini-3-flash-preview";
 
+type AIMessage =
+  | { role: string; content: string }
+  | {
+      role: string;
+      content: Array<
+        | { type: "text"; text: string }
+        | { type: "image_url"; image_url: { url: string } }
+      >;
+    };
+
 async function callAI(
-  messages: { role: string; content: string }[],
-  opts?: { tools?: unknown[]; tool_choice?: unknown },
+  messages: AIMessage[],
+  opts?: { tools?: unknown[]; tool_choice?: unknown; model?: string },
 ) {
   const apiKey = process.env.LOVABLE_API_KEY;
   if (!apiKey) {
@@ -14,7 +24,7 @@ async function callAI(
   }
 
   const body: Record<string, unknown> = {
-    model: DEFAULT_MODEL,
+    model: opts?.model ?? DEFAULT_MODEL,
     messages,
   };
   if (opts?.tools) body.tools = opts.tools;
