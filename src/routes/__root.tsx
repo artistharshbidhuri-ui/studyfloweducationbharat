@@ -34,9 +34,13 @@ export const Route = createRootRoute({
       { name: "author", content: "StudyFlow AI" },
       { name: "theme-color", content: "#1e293b" },
       { property: "og:title", content: "StudyFlow AI" },
-      { property: "og:description", content: "AI study companion for Indian students" },
+      { property: "og:description", content: "AI study companion for Indian students — planner, doubt solver, career guide" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "StudyFlow AI" },
+      { name: "twitter:description", content: "AI study companion for Indian students — planner, doubt solver, career guide" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/XbtKKpEQPTZPKYw6f4hzbiDdWOL2/social-images/social-1776605139954-1000450292.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/XbtKKpEQPTZPKYw6f4hzbiDdWOL2/social-images/social-1776605139954-1000450292.webp" },
     ],
     links: [
       {
