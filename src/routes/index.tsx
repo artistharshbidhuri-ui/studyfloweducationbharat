@@ -1,6 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
-import { useProfile, useTasks, useLogs, computeStreak, todayKey, logProgress } from "@/lib/store";
+import {
+  useProfile,
+  useTasks,
+  useLogs,
+  useQuizzes,
+  useChat,
+  useGame,
+  computeStreak,
+  todayKey,
+  logProgress,
+  detectWeaknesses,
+  subjectStats,
+} from "@/lib/store";
+import { levelFromPoints, BADGES } from "@/lib/education";
 import { AppShell } from "@/components/AppShell";
 import { Onboarding } from "@/components/Onboarding";
 import {
@@ -12,8 +25,13 @@ import {
   Sparkles,
   Check,
   Calendar,
+  AlertTriangle,
+  TrendingUp,
+  Compass,
+  Trophy,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
@@ -23,13 +41,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "AI-powered study planner, doubt solver and career guide for CBSE, ICSE & State Board students from Class 6 to 12.",
+          "AI-powered study planner, doubt solver, quiz mode and career guide for CBSE, ICSE & State Board students from Class 6 to 12.",
       },
       { property: "og:title", content: "StudyFlow AI — Smart Study Companion" },
       {
         property: "og:description",
         content:
-          "Plan studies, solve doubts in Hinglish, track streaks, and get career guidance — all in one app.",
+          "Plan studies, solve doubts in Hinglish, take quizzes, build skills, track streaks, and get career guidance — all in one app.",
       },
     ],
   }),
@@ -46,6 +64,9 @@ function Dashboard() {
   const [profile] = useProfile();
   const [tasks, setTasks] = useTasks();
   const [logs] = useLogs();
+  const [quizzes] = useQuizzes();
+  const [chat] = useChat();
+  const [game] = useGame();
 
   if (!profile) return null;
 
@@ -57,6 +78,9 @@ function Dashboard() {
   const minutesToday = logs.find((l) => l.date === today)?.minutes ?? 0;
   const weekLogs = lastNDays(7).map((date) => logs.find((l) => l.date === date)?.minutes ?? 0);
   const weekTotal = weekLogs.reduce((a, b) => a + b, 0);
+  const insights = detectWeaknesses(tasks, quizzes, chat).slice(0, 3);
+  const subjectData = subjectStats(tasks, quizzes).slice(0, 5);
+  const level = levelFromPoints(game.points);
 
   const toggleTask = (id: string) => {
     setTasks((prev) =>
@@ -117,6 +141,45 @@ function Dashboard() {
         />
       </div>
 
+      {/* Insights — Weakness detection */}
+      {insights.length > 0 && (
+        <div className="mt-4">
+          <h2 className="text-sm font-bold flex items-center gap-2 mb-2">
+            <AlertTriangle className="h-4 w-4 text-warning" /> Insights
+          </h2>
+          <div className="space-y-2">
+            {insights.map((ins, i) => (
+              <Link
+                key={i}
+                to="/quiz"
+                className={cn(
+                  "block rounded-2xl border p-3 hover:border-primary/40 transition-colors",
+                  ins.severity === "high" && "border-destructive/40 bg-destructive/5",
+                  ins.severity === "medium" && "border-warning/40 bg-warning/5",
+                  ins.severity === "low" && "border-border gradient-card",
+                )}
+              >
+                <div className="flex items-start gap-2">
+                  <span className={cn(
+                    "h-7 w-7 rounded-lg flex items-center justify-center shrink-0",
+                    ins.severity === "high" && "bg-destructive/20 text-destructive",
+                    ins.severity === "medium" && "bg-warning/20 text-warning",
+                    ins.severity === "low" && "bg-secondary text-muted-foreground",
+                  )}>
+                    <AlertTriangle className="h-4 w-4" />
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold">Weak in {ins.subject}</div>
+                    <div className="text-[11px] text-muted-foreground mt-0.5">{ins.reason}</div>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Week chart */}
       <div className="mt-3 rounded-3xl border border-border gradient-card p-5">
         <div className="flex items-center justify-between mb-4">
@@ -152,6 +215,67 @@ function Dashboard() {
           })}
         </div>
       </div>
+
+      {/* Subject performance */}
+      {subjectData.length > 0 && (
+        <div className="mt-3 rounded-3xl border border-border gradient-card p-5">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="text-sm font-bold flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-success" /> Subjects
+              </h2>
+              <p className="text-xs text-muted-foreground">Study time + quiz accuracy</p>
+            </div>
+          </div>
+          <div className="space-y-2.5">
+            {subjectData.map((s) => {
+              const maxMin = Math.max(...subjectData.map((d) => d.studyMin), 60);
+              return (
+                <div key={s.subject}>
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="font-semibold">{s.subject}</span>
+                    <span className="text-muted-foreground">
+                      {s.studyMin}m{s.quizCount > 0 ? ` • ${Math.round(s.quizAcc)}%` : ""}
+                    </span>
+                  </div>
+                  <div className="h-2 bg-secondary rounded-full overflow-hidden">
+                    <div
+                      className="h-full gradient-primary transition-all"
+                      style={{ width: `${(s.studyMin / maxMin) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Gamification card */}
+      {game.points > 0 && (
+        <div className="mt-3 rounded-3xl gradient-primary p-5 relative overflow-hidden">
+          <div className="absolute -right-6 -top-6 h-32 w-32 rounded-full bg-white/10" />
+          <div className="relative flex items-center justify-between">
+            <div className="flex-1">
+              <div className="text-xs font-bold uppercase tracking-wider text-primary-foreground/80 flex items-center gap-1">
+                <Trophy className="h-3 w-3" /> {level.level}
+              </div>
+              <div className="text-3xl font-bold text-primary-foreground mt-1">{game.points} pts</div>
+              <Progress value={level.progress} className="mt-2 bg-white/20" />
+            </div>
+            <div className="ml-3 text-right">
+              <div className="text-xs font-bold uppercase tracking-wider text-primary-foreground/80">Badges</div>
+              <div className="flex gap-1 mt-1 text-xl">
+                {game.badges.length === 0
+                  ? <span className="text-primary-foreground/50 text-sm">—</span>
+                  : game.badges.slice(0, 3).map((b) => (
+                      <span key={b} title={BADGES[b]?.name}>{BADGES[b]?.emoji ?? "🏅"}</span>
+                    ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Today's plan */}
       <div className="mt-5 flex items-center justify-between">
@@ -228,21 +352,21 @@ function Dashboard() {
       {/* Quick actions */}
       <div className="mt-6 grid grid-cols-2 gap-3">
         <Link
-          to="/doubt"
+          to="/quiz"
           className="rounded-2xl border border-border gradient-card p-4 hover:border-primary/40 transition-colors"
         >
           <div className="h-9 w-9 rounded-xl bg-primary/15 flex items-center justify-center text-primary mb-2">
             <BookOpen className="h-5 w-5" />
           </div>
-          <div className="font-semibold text-sm">Solve a doubt</div>
-          <div className="text-xs text-muted-foreground mt-0.5">Ask anything in Hinglish</div>
+          <div className="font-semibold text-sm">Take a quiz</div>
+          <div className="text-xs text-muted-foreground mt-0.5">Test your chapter</div>
         </Link>
         <Link
           to="/career"
           className="rounded-2xl border border-border gradient-card p-4 hover:border-primary/40 transition-colors"
         >
           <div className="h-9 w-9 rounded-xl bg-accent/20 flex items-center justify-center text-accent mb-2">
-            <Sparkles className="h-5 w-5" />
+            <Compass className="h-5 w-5" />
           </div>
           <div className="font-semibold text-sm">Career path</div>
           <div className="text-xs text-muted-foreground mt-0.5">Find your fit</div>
